@@ -2,14 +2,41 @@
   text-align: center;
 }
 
-.bounding-box {
-      position: absolute;
-      box-shadow: 0 0 0 3px #149df2 inset;
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-      -ms-flex-pack: center;
-      justify-content: center;
-      cursor: pointer;
+.container {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    border: 1px solid #1b6ca8;
+    display: inline-block;
+}
+.faceBoundingSet {
+    background-color: lightblue;
+    border: 1px solid #ffd3e1;
+}
+.ImageInput{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border: 1px solid #ffd3e1;
+}
+
+.boundingBox {
+    position: absolute;
+    box-shadow: 0 0 0 3px #149df2 inset;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-pack: center;
+    justify-content: center;
+    cursor: pointer;
 }

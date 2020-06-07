@@ -32,6 +32,9 @@ class App extends Component {
           const rightCol = regions.region_info.bounding_box.right_col
           const left_colCol = regions.region_info.bounding_box.left_col
 
+          console.log(regions.region_info.bounding_box)
+
+
           bouncingBox = {
               bottom_row: height - bottomRow,
               left_col: bottomRow * width,
@@ -66,9 +69,17 @@ class App extends Component {
       <div className="App">
         <h1>Hello! I'm a face detector! </h1>
         <ImageInput onButtonSubmit={this.onButtonSubmit}/>
-        <ImageHolder
-          imgURL="https://i.insider.com/57f67e9157540ccb028b537e?width=600&format=jpeg&auto=webp"
-          bouncingBox = {this.state.bouncingBox}/>
+        <div className="container">
+          <div className="ImageInput">
+
+            <ImageHolder
+              imgURL="https://i.insider.com/57f67e9157540ccb028b537e?width=600&format=jpeg&auto=webp"
+              bouncingBox = {this.state.bouncingBox}/>
+          </div>
+          <div className="faceBoundingSet">
+
+          </div>
+        </div>
       </div>
     )
   }
