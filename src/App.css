@@ -12,21 +12,18 @@
     display: -ms-flexbox;
     display: flex;
     position: relative;
-    border: 1px solid #1b6ca8;
     display: inline-block;
 }
 .faceBoundingSet {
     background-color: lightblue;
-    border: 1px solid #ffd3e1;
 }
-.ImageInput{
+.imageHolder{
     display: -ms-flexbox;
     display: flex;
     -ms-flex-pack: center;
     justify-content: center;
     -ms-flex-align: center;
     align-items: center;
-    border: 1px solid #ffd3e1;
 }
 
 .boundingBox {

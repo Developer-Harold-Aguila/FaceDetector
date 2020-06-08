@@ -2,13 +2,12 @@ import React from 'react'
 
 function ImageHolder({imgURL}) {
   return (
-    <div className="bounding-box-set">
+    <div className="imageHolder">
       <img
-        className="bounding-box"
-        id="inputImage"
+        id="inputImageHolder"
         alt="inputimage"
-        width="auto"
-        height="500px"
+        width="500px"
+        heigh="auto"
         src={imgURL}
         />
     </div>

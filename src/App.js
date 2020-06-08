@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import './App.css'
+import InputHolder from './components/InputHolder'
 import ImageHolder from './components/ImageHolder'
-import ImageInput from './components/ImageInput'
-import FaceDetectorHolder from './components/FaceDetectorHolder'
+import FaceBoundingSet from './components/FaceBoundingSet'
 import  Clarifai from 'clarifai'
 import api_key from './api'
 
@@ -15,70 +15,65 @@ class App extends Component {
     super()
     this.state = {
       inputImage: "",
-      bouncingBox: {}
+      boundingBox: {}
     }
   }
 
-  calculateBouncingBox = (data) => {
-    const image = document.getElementById("inputImage")
+  calculateBoundingBox = (data) => {
+    const image = document.getElementById("inputImageHolder")
     const width  = Number(image.width)
     const height = Number(image.height)
-
-    let bouncingBoxList = []
-    let bouncingBox = []
+    let boundingBoxList = []
+    let boundingBox = []
 
     data.outputs[0].data.regions.map(regions => {
+          const leftCol = regions.region_info.bounding_box.left_col
           const bottomRow = regions.region_info.bounding_box.bottom_row
           const rightCol = regions.region_info.bounding_box.right_col
-          const left_colCol = regions.region_info.bounding_box.left_col
+          const topRow = regions.region_info.bounding_box.top_row
 
-          console.log(regions.region_info.bounding_box)
-
-
-          bouncingBox = {
-              bottom_row: height - bottomRow,
-              left_col: bottomRow * width,
-              right_col: width - rightCol * width,
-              top_row: left_colCol * height
+          boundingBox = {
+              left: leftCol * width,
+              bottom: height - bottomRow * height,
+              right: width - rightCol * width,
+              top: topRow * height
           }
 
-          bouncingBoxList.push(bouncingBox)
+          boundingBoxList.push(boundingBox)
         }
     )
-    return bouncingBoxList
+    return boundingBoxList
   }
 
-  setBouncingBox = (bouncingBoxList) => {
-    this.setState({
-      bouncingBox: bouncingBoxList
-    })
+  setBoundingBox (boundingBoxList) {
+      this.setState({
+        boundingBox: boundingBoxList
+      })
+  }
 
-    console.log("State BouncingBox Values",this.state.bouncingBox)
+
+  onChange = (event) => {
+    this.setState(
+      { inputImage: event.target.value,
+        boundingBox: {}
+      })
   }
 
   onButtonSubmit = () => {
     app.models.predict(Clarifai.FACE_DETECT_MODEL,
-          "https://i.insider.com/57f67e9157540ccb028b537e?width=600&format=jpeg&auto=webp")
-          .then( response => this.setBouncingBox(this.calculateBouncingBox(response)))
+          this.state.inputImage)
+          .then( response => this.setBoundingBox(this.calculateBoundingBox(response)))
           .catch(error=> console.log(error))
   }
-
 
   render(){
     return (
       <div className="App">
         <h1>Hello! I'm a face detector! </h1>
-        <ImageInput onButtonSubmit={this.onButtonSubmit}/>
+        <InputHolder onButtonSubmit={this.onButtonSubmit} onChange={this.onChange}/>
         <div className="container">
-          <div className="ImageInput">
-
-            <ImageHolder
-              imgURL="https://i.insider.com/57f67e9157540ccb028b537e?width=600&format=jpeg&auto=webp"
-              bouncingBox = {this.state.bouncingBox}/>
-          </div>
-          <div className="faceBoundingSet">
-
-          </div>
+          <ImageHolder imgURL={this.state.inputImage}/>
+          <FaceBoundingSet boundingBox = {this.state.boundingBox} />
         </div>
       </div>
     )
